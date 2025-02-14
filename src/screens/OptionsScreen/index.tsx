@@ -5,7 +5,7 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import { useScreenLock } from "../../components/ScreenLockContext";
 import { styles } from "./styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import * as CHSCONSTANTS from '../../constants/constants';
 
 
 
@@ -56,14 +56,47 @@ const StatItem = ({ title, value }) => (
 );
 
 export default function OptionsScreen() {
+  const [initialValue, setInitialValue] = useState(true);
+  const [tempWorkValue, setTempWorkValue] = useState();
+  const [tempAllTimeStat, setTempAllTimeStat] = useState();
+  const [tempBreakValue, setTempBreakValue] = useState();
+  const [tempEnableSound, setTempEnableSound] = useState();
+  const [tempEnableVibration, setTempEnableVibration] = useState();
+  const [tempFrequency, setTempFrequency] = useState();
+  const [tempLongBreakEnabled, setTempLongBreakEnabled] = useState();
+  const [tempLongBreakValue, setTempLongBreakValue] = useState();
+  const [tempScreenLock, setTempScreenLock] = useState();
+  const [tempTodayStat, setTempTodayStat] = useState();
 
-  // const [longBreakEnabled, setLongBreakEnabled] = useState(false);
-  // const [longBreakLength, setLongBreakLength] = useState(15);
-  // const [longBreakFrequency, setLongBreakFrequency] = useState(4);
+//  useEffect(()=>{
+// fetch();
+//  }
+// );
 
+// const fetch=async ()=>{
+//   const temp = await AsyncStorage.getItem('initialValue');
+//   if(temp==null){
+//     setInitialValue(CHSCONSTANTS.defaultInitial);
+//   }else{
+//     setInitialValue(temp);
 
-  const [completedToday, setCompletedToday] = useState(0);
-  const [completedAllTime, setCompletedAllTime] = useState(0);
+//   }
+//   if(initialValue){
+//       setTempWorkValue(newValue);
+//       setTempAllTimeStat(newValue);
+//       setTempBreakValue(newValue);
+//       setTempEnableSound(newValue);
+//       setTempEnableVibration(newValue);
+//       setTempFrequency(newValue);
+//       setTempLongBreakEnabled(newValue);
+//       setTempLongBreakValue(newValue);
+//       setTempScreenLock(newValue);
+//       setTempTodayStat(newValue);
+//   }
+// }
+
+  const [completedToday, setCompletedToday] = useState(CHSCONSTANTS.defaultTodayStat);
+  const [completedAllTime, setCompletedAllTime] = useState(CHSCONSTANTS.defaultAllTimeStat);
   const [workSessionsCompleted, setWorkSessionsCompleted] = useState(0);
 
   const {
@@ -88,13 +121,7 @@ export default function OptionsScreen() {
   } = useScreenLock();
 
 
-  // useEffect(() => {
-  //   if (workSessionsCompleted >= longBreakFrequency) {
-  //     // Once the user has completed enough sessions for a long break      
-  //     Alert.alert(`Time for a long break! Take ${longBreakLength} minutes.`);
-  //     setWorkSessionsCompleted(0); // Reset session counter after long break
-  //   }
-  // }, [workSessionsCompleted, longBreakFrequency, longBreakLength]);
+ 
 
 
   const checkMidnightReset = async () => {

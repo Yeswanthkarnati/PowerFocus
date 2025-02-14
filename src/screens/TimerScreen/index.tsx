@@ -1,36 +1,34 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, TouchableOpacity, Animated, StatusBar, Vibration, Easing } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, StatusBar, Vibration } from 'react-native';
 import { styles } from './styles';
 import Sound from 'react-native-sound';
 import { useScreenLock } from '../../components/ScreenLockContext';
-   
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import CircularProgress from 'react-native-circular-progress-indicator';
 
 
 const TimerScreen = ({ navigation }) => {
-    
+
     const [isActive, setIsActive] = useState(false);
     const [isPaused, setIsPaused] = useState(false);
     const [timeLeft, setTimeLeft] = useState(60);
     const [sessionType, setSessionType] = useState('Work');
-   
+
     const [alarmSound, setAlarmSound] = useState(null);
-    const { workLength, breakLength, soundEnabled, vibrationEnabled, longBreakEnabled, longBreakLength, longBreakFrequency,modifiedFrequency } = useScreenLock();
+    const { workLength, breakLength, soundEnabled, vibrationEnabled, longBreakEnabled, longBreakLength, longBreakFrequency, modifiedFrequency } = useScreenLock();
     const [frequency, setFrequency] = useState(modifiedFrequency);
 
     const [modifiedBreakLength, setModifiedBreakLength] = useState(breakLength);
 
     const [completedToday, setCompletedToday] = useState(0);
     const [completedAllTime, setCompletedAllTime] = useState(0);
-    const rotationProgress = useRef(new Animated.Value(0)).current;
-    const colorProgress = useRef(new Animated.Value(0)).current;
-    const progressAnimation = useRef(null);
-    const colorAnimation = useRef(null);
+
 
 
 
     useEffect(() => {
-        setTimeLeft(workLength*60);
+        setTimeLeft(workLength * 60);
         Sound.setCategory('Playback');
 
         const sound = new Sound('ringtone.wav', Sound.MAIN_BUNDLE, (error) => {
@@ -63,54 +61,14 @@ const TimerScreen = ({ navigation }) => {
 
 
 
-    const startAnimations = () => {
-        // Stop existing animations
-        if (progressAnimation.current) {
-            progressAnimation.current.stop();
-        }
-        if (colorAnimation.current) {
-            colorAnimation.current.stop();
-        }
 
-        // Reset values
-        rotationProgress.setValue(0);
-        colorProgress.setValue(0);
-
-        // Create and start rotation animation
-        progressAnimation.current = Animated.timing(rotationProgress, {
-            toValue: 1,
-            duration: timeLeft * 1000,
-            easing: Easing.linear,
-            useNativeDriver: false,
-        });
-
-        // Create and start color animation
-        colorAnimation.current = Animated.timing(colorProgress, {
-            toValue: 1,
-            duration: timeLeft * 1000,
-            easing: Easing.linear,
-            useNativeDriver: false,
-        });
-
-        progressAnimation.current.start();
-        colorAnimation.current.start();
-    };
-
-    const stopAnimations = () => {
-        if (progressAnimation.current) {
-            progressAnimation.current.stop();
-        }
-        if (colorAnimation.current) {
-            colorAnimation.current.stop();
-        }
-    };
 
 
     useEffect(() => {
         const loadStats = async () => {
             const todayCount = await AsyncStorage.getItem('completedToday');
             const allTimeCount = await AsyncStorage.getItem('completedAllTime');
-           
+
             setCompletedToday(todayCount ? parseInt(todayCount) : 0);
             setCompletedAllTime(allTimeCount ? parseInt(allTimeCount) : 0);
         };
@@ -118,53 +76,40 @@ const TimerScreen = ({ navigation }) => {
     }, []);
 
     const handleSessionCompletion = async () => {
-       console.log("longBreakEnabled",longBreakEnabled);
-       console.log("longBreakLength",longBreakLength);
-       console.log("longBreakFrequency",longBreakFrequency);
-       console.log("modifiedFrequency",modifiedFrequency);
+
 
         if (sessionType === "Work") {
             const todayCount = await AsyncStorage.getItem('completedToday');
             const allTimeCount = await AsyncStorage.getItem('completedAllTime');
-       
+
             const updatedToday = (todayCount ? parseInt(todayCount) : 0) + 1;
             const updatedAllTime = (allTimeCount ? parseInt(allTimeCount) : 0) + 1;
 
-           setCompletedToday(updatedToday);
+            setCompletedToday(updatedToday);
             setCompletedAllTime(updatedAllTime);
-       
+
             await AsyncStorage.setItem('completedToday', updatedToday.toString());
             await AsyncStorage.setItem('completedAllTime', updatedAllTime.toString());
-            setFrequency(prevFrequency=>prevFrequency+1);
+            setFrequency(prevFrequency => prevFrequency + 1);
         }
-        if(longBreakEnabled){
-            if(longBreakFrequency===frequency){
+        if (longBreakEnabled) {
+            if (longBreakFrequency === frequency) {
                 setFrequency(1);
                 setModifiedBreakLength(longBreakLength);
             }
         }
-     
+
         const nextSession = sessionType === "Work" ? "Break" : "Work";
         setSessionType(nextSession);
         setTimeLeft(nextSession === "Work" ? workLength * 60 : modifiedBreakLength * 60);
         setIsActive(true);
     };
-    
-   
+
+
     useEffect(() => {
         let timer;
         if (isActive) {
-            // Reset progress only when the session starts
-            startAnimations();    
-            // Animate the progress bar over the duration of the session (in seconds)
-            // Animated.timing(progress, {
-            //     toValue: 1,
-            //     duration: timeLeft * 1000, // duration in milliseconds
-            //     easing: Easing.linear,
-            //     useNativeDriver: false, // Set this to false for animating colors
-            // }).start();
-    
-            // Countdown logic for timeLeft
+
             timer = setInterval(() => {
                 setTimeLeft(prevTime => {
                     if (prevTime <= 1) {
@@ -178,19 +123,17 @@ const TimerScreen = ({ navigation }) => {
                 });
             }, 1000);
         } else {
-            stopAnimations();
             clearInterval(timer);
         }
-    
-        return () =>{
+
+        return () => {
             clearInterval(timer);
-        stopAnimations();
-        } 
+        }
     }, [isActive, timeLeft, sessionType]);
-    
-    
-    
-    
+
+
+
+
 
     const formatTime = (seconds) => {
         const minutes = Math.floor(seconds / 60);
@@ -212,9 +155,8 @@ const TimerScreen = ({ navigation }) => {
         setIsActive(false);
         setIsPaused(false);
         setTimeLeft(sessionType === 'Work' ? workLength * 60 : breakLength * 60);
-        rotationProgress.setValue(0);
-        colorProgress.setValue(0);
-                stopAlarmSound();
+        
+        stopAlarmSound();
     };
 
     const stopAlarmSound = () => {
@@ -230,41 +172,36 @@ const TimerScreen = ({ navigation }) => {
     };
 
 
-    
-    const rotateInterpolation = rotationProgress.interpolate({
-        inputRange: [0, 1],
-        outputRange: ['0deg', '360deg'],
-    });
-
-    const colorInterpolation = colorProgress.interpolate({
-        inputRange: [0, 1],
-        outputRange: ['#4A90E2', '#FF6347'],
-    });
 
 
-    const workColor = "green"; 
-    const breakColor = "violet"; 
-   
- 
+
+
+    const workColor = "#00563B";
+    const breakColor = "violet";
+
+
     const backgroundColor = sessionType === "Work" ? workColor : breakColor;
 
     return (
-<View style={[styles.container, { backgroundColor }]}>
-<StatusBar backgroundColor={backgroundColor} />
+        <View style={[styles.container, { backgroundColor }]}>
+            <StatusBar backgroundColor={backgroundColor} />
             <View style={styles.timerContainer}>
-                <View style={styles.staticBorder} />
-                <Animated.View
-                    style={[
-                        styles.animatedBorder,
-                        {
-                            transform: [{
-                                rotate: rotateInterpolation
-                            }],
-                            borderLeftColor: colorInterpolation,
-                        },
-                    ]}
-                />
+                <View style={styles.progressContainer}>
+                    <CircularProgress
+                        value={(timeLeft / (sessionType === 'Work' ? workLength * 60 : modifiedBreakLength * 60)) * 100}
+                        maxValue={100}
+                        radius={120}
+                        duration={1000}
+                        strokeWidth={10}
+                        activeStrokeColor="#008B8B"
+                        inActiveStrokeColor="rgba(255, 255, 255, 0.3)"
+                        inActiveStrokeOpacity={0.5}
+                        progressValueColor={'#17B169'}
+                        titleColor={'#66FF00'}
 
+                        titleStyle={{ fontSize: 40 }}
+                    />
+                </View>
                 <View style={styles.timerCircle}>
                     <Text style={styles.timeText}>{formatTime(timeLeft)}</Text>
                 </View>
@@ -272,7 +209,6 @@ const TimerScreen = ({ navigation }) => {
             <Text style={styles.sessionType}>{sessionType} Session</Text>
 
             <View style={styles.controlsContainer}>
-                {/* This ensures Stop button has a reserved space */}
                 <View style={{ height: 50, justifyContent: 'center' }}>
                     {isActive && (
                         <TouchableOpacity style={styles.stopButton} onPress={resetTimer}>
@@ -281,7 +217,6 @@ const TimerScreen = ({ navigation }) => {
                     )}
                 </View>
 
-                {/* Round Button - Position remains fixed */}
                 <View style={{ height: 100, justifyContent: 'center', alignItems: 'center' }}>
                     <TouchableOpacity style={styles.roundButton} onPress={toggleTimer}>
                         <Text style={styles.buttonText}>

@@ -8,11 +8,14 @@ export const styles = StyleSheet.create({
         padding: 20,
     },
     timerContainer: {
-        width: 250,
-        height: 250,
-        justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 40,
+        justifyContent: 'center',
+        marginVertical: 40,
+    },
+    progressContainer: {
+        position: 'relative',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     staticBorder: {
         position: 'absolute',
@@ -23,18 +26,10 @@ export const styles = StyleSheet.create({
         borderColor: '#4A90E2',
         opacity: 0.3,
     },
-    // animatedBorder: {
-    //     position: 'absolute',
-    //     width: 250,
-    //     height: 250,
-    //     borderRadius: 125,
-    //     borderWidth: 15,
-    //     borderLeftColor: '#4A90E2',
-    //     borderRightColor: 'transparent',
-    //     borderTopColor: '#4A90E2',
-    //     borderBottomColor: 'transparent',
-    // },
+
     timerCircle: {
+        position: 'absolute',
+
         justifyContent: 'center',
         alignItems: 'center',
         width: 230,
@@ -88,15 +83,14 @@ export const styles = StyleSheet.create({
         bottom: 80,
         alignSelf: 'center',
     },
-    // stopButton: {
-    //     marginBottom: 10,
-    //     backgroundColor: '#ff333f',
-    //     padding: 10,
-    //     borderRadius: 5,
-    //     },
+    stopButton: {
+        marginBottom: 10,
+        padding: 10,
+        borderRadius: 5,
+        },
         stopText: {
         fontSize: 16,
-        color: '#F9303C',
+        color: '#EC5800',
         },
         animatedBorder: {
             position: 'absolute',
