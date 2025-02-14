@@ -241,9 +241,16 @@ const TimerScreen = ({ navigation }) => {
         outputRange: ['#4A90E2', '#FF6347'],
     });
 
+
+    const workColor = "green"; 
+    const breakColor = "violet"; 
+   
+ 
+    const backgroundColor = sessionType === "Work" ? workColor : breakColor;
+
     return (
-        <View style={styles.container}>
-            <StatusBar backgroundColor={'#2E3B4E'} />
+<View style={[styles.container, { backgroundColor }]}>
+<StatusBar backgroundColor={backgroundColor} />
             <View style={styles.timerContainer}>
                 <View style={styles.staticBorder} />
                 <Animated.View

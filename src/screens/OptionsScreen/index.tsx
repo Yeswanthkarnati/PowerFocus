@@ -30,7 +30,7 @@ const OptionItem = ({ title, value, onIncrease, onDecrease }) => (
       </TouchableOpacity>
     </View>
 
-    <Text style={styles.optionValue}>{value} minutes</Text>
+    <Text style={styles.optionValue}>{title === 'Frequency' ? `${value} sessions` : `${value} minutes`}</Text>
   </View>
 );
 
@@ -64,7 +64,7 @@ export default function OptionsScreen() {
 
   const [completedToday, setCompletedToday] = useState(0);
   const [completedAllTime, setCompletedAllTime] = useState(0);
-  const [workSessionsCompleted, setWorkSessionsCompleted] = useState(0); 
+  const [workSessionsCompleted, setWorkSessionsCompleted] = useState(0);
 
   const {
     workLength,
@@ -74,11 +74,11 @@ export default function OptionsScreen() {
     modifiedFrequency,
     setModifiedFrequency,
     longBreakEnabled,
-      setLongBreakEnabled,
-      longBreakLength,
-      setLongBreakLength,
-      longBreakFrequency,
-      setLongBreakFrequency,
+    setLongBreakEnabled,
+    longBreakLength,
+    setLongBreakLength,
+    longBreakFrequency,
+    setLongBreakFrequency,
     soundEnabled,
     setSoundEnabled,
     vibrationEnabled,
@@ -87,10 +87,10 @@ export default function OptionsScreen() {
     setPreventScreenLock
   } = useScreenLock();
 
-  
+
   // useEffect(() => {
   //   if (workSessionsCompleted >= longBreakFrequency) {
-  //     // Once the user has completed enough sessions for a long break
+  //     // Once the user has completed enough sessions for a long break      
   //     Alert.alert(`Time for a long break! Take ${longBreakLength} minutes.`);
   //     setWorkSessionsCompleted(0); // Reset session counter after long break
   //   }
@@ -122,7 +122,7 @@ export default function OptionsScreen() {
 
   useEffect(() => {
     const loadStats = async () => {
-      await checkMidnightReset();  
+      await checkMidnightReset();
 
 
       const todayCount = await AsyncStorage.getItem("completedToday");
@@ -163,7 +163,7 @@ export default function OptionsScreen() {
             value={longBreakEnabled}
             onToggle={() => {
               setLongBreakEnabled(!longBreakEnabled);
-              setModifiedFrequency(1); 
+              setModifiedFrequency(1);
             }}
           />
           {longBreakEnabled && (
