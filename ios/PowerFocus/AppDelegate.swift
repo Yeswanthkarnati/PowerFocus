@@ -2,6 +2,7 @@ import UIKit
 import React
 import React_RCTAppDelegate
 import ReactAppDependencyProvider
+import RNBootSplash
 
 @main
 class AppDelegate: RCTAppDelegate {
@@ -26,5 +27,11 @@ class AppDelegate: RCTAppDelegate {
 #else
     Bundle.main.url(forResource: "main", withExtension: "jsbundle")
 #endif
+  }
+
+  override func createRootView(with bridge: RCTBridge!, moduleName: String!, initProps: [AnyHashable : Any]!) -> UIView! {
+    let rootView = super.createRootView(with: bridge, moduleName: moduleName, initProps: initProps)
+    RNBootSplash.initWithStoryboard("BootSplash", rootView: rootView)
+    return rootView
   }
 }

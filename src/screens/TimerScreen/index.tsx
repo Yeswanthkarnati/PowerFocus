@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, TouchableOpacity, StatusBar, Vibration } from 'react-native';
 import { styles } from './styles';
 import Sound from 'react-native-sound';
@@ -15,8 +15,9 @@ const TimerScreen = ({ navigation }) => {
     const [timeLeft, setTimeLeft] = useState(60);
     const [sessionType, setSessionType] = useState('Work');
 
-    const [alarmSound, setAlarmSound] = useState(null);
-    const { workLength, breakLength, soundEnabled, vibrationEnabled, longBreakEnabled, longBreakLength, longBreakFrequency, modifiedFrequency } = useScreenLock();
+    const alarmSoundRef = useRef<Sound | null>(null);
+    const { workLength, breakLength, soundEnabled, vibrationEnabled, longBreakEnabled, longBreakLength, longBreakFrequency, modifiedFrequency, ringtoneUri, ringtoneLoaded, workColor,
+  breakColor, } = useScreenLock();
     const [frequency, setFrequency] = useState(modifiedFrequency);
 
     const [modifiedBreakLength, setModifiedBreakLength] = useState(breakLength);
@@ -31,24 +32,48 @@ const TimerScreen = ({ navigation }) => {
         setTimeLeft(workLength * 60);
         Sound.setCategory('Playback');
 
-        const sound = new Sound('ringtone.wav', Sound.MAIN_BUNDLE, (error) => {
-            if (error) {
-                console.log('Failed to load sound', error);
-                return;
-            }
-            setAlarmSound(sound);
-        });
-
-        return () => {
-            if (alarmSound) {
-                alarmSound.release();
-            }
-        };
     }, []);
 
+    useEffect(() => {
+        if (!ringtoneLoaded) {
+            return;
+        }
+
+        let isDisposed = false;
+        let sound: Sound | null = null;
+        alarmSoundRef.current = null;
+
+        const onSoundLoaded = (error: Error | null) => {
+            if (isDisposed) {
+                return;
+            }
+
+            if (error) {
+                console.error('Failed to load ringtone', error);
+                sound?.release();
+                return;
+            }
+
+            if (sound) {
+                alarmSoundRef.current = sound;
+            }
+        };
+        sound = ringtoneUri
+            ? new Sound(ringtoneUri, '', onSoundLoaded)
+            : new Sound('ringtone.wav', Sound.MAIN_BUNDLE, onSoundLoaded);
+
+        return () => {
+            isDisposed = true;
+            if (alarmSoundRef.current === sound) {
+                alarmSoundRef.current = null;
+            }
+            sound?.release();
+        };
+    }, [ringtoneLoaded, ringtoneUri]);
+
     const playAlarmSound = () => {
-        if (alarmSound && soundEnabled) {
-            alarmSound.play((success) => {
+        if (alarmSoundRef.current && soundEnabled) {
+            alarmSoundRef.current.play((success: boolean) => {
                 if (!success) {
                     console.log('Sound playback failed');
                 }
@@ -160,8 +185,8 @@ const TimerScreen = ({ navigation }) => {
     };
 
     const stopAlarmSound = () => {
-        if (alarmSound) {
-            alarmSound.stop(() => {
+        if (alarmSoundRef.current) {
+            alarmSoundRef.current.stop(() => {
                 console.log('Sound stopped');
             });
         }
@@ -170,15 +195,6 @@ const TimerScreen = ({ navigation }) => {
     const handleOptions = () => {
         navigation.navigate('OptionsScreen');
     };
-
-
-
-
-
-
-    const workColor = "#00563B";
-    const breakColor = "violet";
-
 
     const backgroundColor = sessionType === "Work" ? workColor : breakColor;
 
