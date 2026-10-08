@@ -1,45 +1,237 @@
-**Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**
+# ⚡ PowerFocus
 
-When you're done, you can delete the content in this README and update the file with details for others getting started with your repository.
+> A clean and focused Pomodoro productivity app built with React Native.
 
-*We recommend that you open this README in another tab as you perform the tasks below. You can [watch our video](https://youtu.be/0ocf7u76WSo) for a full demo of all the steps in this tutorial. Open the video in a new tab to avoid leaving Bitbucket.*
+**PowerFocus** is a modern Pomodoro timer designed to help users stay focused, manage work sessions, and build consistent productivity habits.
 
----
-
-## Edit a file
-
-You’ll start by editing this README file to learn how to edit a file in Bitbucket.
-
-1. Click **Source** on the left side.
-2. Click the README.md link from the list of files.
-3. Click the **Edit** button.
-4. Delete the following text: *Delete this line to make a change to the README from Bitbucket.*
-5. After making your change, click **Commit** and then **Commit** again in the dialog. The commit page will open and you’ll see the change you just made.
-6. Go back to the **Source** page.
+The app follows a clean, minimal, iOS-inspired experience while being built with **React Native CLI** for a smooth mobile experience.
 
 ---
 
-## Create a file
+## ✨ Features
 
-Next, you’ll add a new file to this repository.
+### ⏱️ Pomodoro Timer
+- Customizable work session duration
+- Customizable break duration
+- Start, pause, resume and reset timer
+- Automatic transition between work and break sessions
 
-1. Click the **New file** button at the top of the **Source** page.
-2. Give the file a filename of **contributors.txt**.
-3. Enter your name in the empty file space.
-4. Click **Commit** and then **Commit** again in the dialog.
-5. Go back to the **Source** page.
+### ☕ Long Breaks
+- Enable or disable long breaks
+- Customize long break duration
+- Configure how frequently long breaks occur
 
-Before you move on, go ahead and explore the repository. You've already seen the **Source** page, but check out the **Commits**, **Branches**, and **Settings** pages.
+### 🎨 Custom Appearance
+- Multiple color options for work and break sessions
+- Custom work-session background color
+- Custom break-session background color
+- Clean and minimal UI
+
+### 🔔 Sound & Vibration
+- Session completion sound
+- Vibration feedback
+- Sound and vibration can be enabled or disabled independently
+- Custom ringtone support planned / under development
+
+### 📱 Screen Lock Prevention
+- Optional screen-lock prevention while the timer is running
+- Keeps the device awake during an active focus session
+
+### 📊 Productivity Statistics
+- Completed sessions today
+- All-time completed sessions
+- Automatic daily statistics reset
+
+### 💾 Persistent Settings
+User preferences are stored locally so settings remain available after restarting the application.
 
 ---
 
-## Clone a repository
+## 🛠️ Tech Stack
 
-Use these steps to clone from SourceTree, our client for using the repository command-line free. Cloning allows you to work on your files locally. If you don't yet have SourceTree, [download and install first](https://www.sourcetreeapp.com/). If you prefer to clone from the command line, see [Clone a repository](https://confluence.atlassian.com/x/4whODQ).
+- **React Native**
+- **React Native CLI**
+- **JavaScript**
+- **React Navigation**
+- **AsyncStorage**
+- **React Native Keep Awake**
+- **React Native BootSplash**
+- **Android Native Development**
+- **Git & GitHub**
 
-1. You’ll see the clone button under the **Source** heading. Click that button.
-2. Now click **Check out in SourceTree**. You may need to create a SourceTree account or log in.
-3. When you see the **Clone New** dialog in SourceTree, update the destination path and name if you’d like to and then click **Clone**.
-4. Open the directory you just created to see your repository’s files.
+---
 
-Now that you're more familiar with your Bitbucket repository, go ahead and add a new file locally. You can [push your change back to Bitbucket with SourceTree](https://confluence.atlassian.com/x/iqyBMg), or you can [add, commit,](https://confluence.atlassian.com/x/8QhODQ) and [push from the command line](https://confluence.atlassian.com/x/NQ0zDQ).
+## 📱 Screens
+
+PowerFocus includes:
+
+- Focus Timer
+- Break Timer
+- Options / Settings
+- Appearance & Color Customization
+- Long Break Configuration
+- Alarm Settings
+- Productivity Statistics
+
+---
+
+## 🧠 How Pomodoro Works
+
+PowerFocus follows the classic Pomodoro productivity technique:
+
+```text
+Focus Session
+     ↓
+Short Break
+     ↓
+Focus Session
+     ↓
+Short Break
+     ↓
+Focus Session
+     ↓
+Long Break
+```
+
+The number and duration of sessions can be customized from the Options screen.
+
+---
+
+## 🎯 Why PowerFocus?
+
+PowerFocus was built with a simple goal:
+
+> **Reduce distractions and make focused work easier.**
+
+Instead of adding unnecessary complexity, the app focuses on a clean interface, customizable sessions, useful productivity statistics, and a distraction-free experience.
+
+---
+
+## 🏗️ Project Structure
+
+```text
+PowerFocus/
+│
+├── android/
+│
+├── src/
+│   ├── components/
+│   ├── context/
+│   ├── screens/
+│   └── ...
+│
+├── App.tsx
+├── package.json
+├── babel.config.js
+├── metro.config.js
+└── README.md
+```
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+Make sure you have the following installed:
+
+- Node.js
+- npm
+- Java Development Kit
+- Android Studio
+- Android SDK
+- React Native CLI
+- Android Emulator or physical Android device
+
+### Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/Yeswanthkarnati/PowerFocus.git
+```
+
+Navigate to the project:
+
+```bash
+cd PowerFocus
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start Metro:
+
+```bash
+npm start
+```
+
+Run the Android application:
+
+```bash
+npx react-native run-android
+```
+
+---
+
+## 🔧 Development
+
+PowerFocus is developed using **React Native CLI** rather than Expo.
+
+The project currently focuses on Android development, with the architecture designed to support the iOS platform as well.
+
+---
+
+## 🗺️ Roadmap
+
+- [] Pomodoro timer
+- [] Work & break customization
+- [] Long break support
+- [] Screen-lock prevention
+- [] Sound & vibration settings
+- [] Productivity statistics
+- [] Persistent user preferences
+- [] Custom session colors
+- [] Custom ringtone selection
+- [] iOS version
+- [] Additional themes and customization
+
+---
+
+## 📸 Screenshots
+
+Screenshots will be added soon.
+
+---
+
+## 🤝 Contributing
+
+Contributions, suggestions, and feedback are welcome.
+
+If you have an idea that could improve PowerFocus, feel free to open an issue or submit a pull request.
+
+---
+
+## 👨‍💻 Author
+
+**Yeswanth Karnati**
+
+React Native Developer
+
+GitHub:  
+https://github.com/Yeswanthkarnati
+
+---
+
+## ⭐ Support
+
+If you find PowerFocus useful or interesting, consider giving the repository a ⭐ on GitHub.
+
+---
+
+## 📄 License
+
+This project is currently available for learning and development purposes.
