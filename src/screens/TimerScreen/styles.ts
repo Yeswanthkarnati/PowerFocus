@@ -1,0 +1,103 @@
+import { StyleSheet } from "react-native";
+export const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#2E3B4E',
+        padding: 20,
+    },
+    timerContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginVertical: 40,
+    },
+    progressContainer: {
+        position: 'relative',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    staticBorder: {
+        position: 'absolute',
+        width: 250,
+        height: 250,
+        borderRadius: 125,
+        borderWidth: 15,
+        borderColor: '#4A90E2',
+        opacity: 0.3,
+    },
+
+    timerCircle: {
+        position: 'absolute',
+
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 230,
+        height: 230,
+        borderRadius: 115,
+        backgroundColor: '#1D2733',
+    },
+    timeText: {
+        fontSize: 48,
+        color: '#fff',
+        fontWeight: 'bold',
+    },
+    sessionType: {
+        fontSize: 18,
+        color: '#fff',
+        marginBottom: 30,
+    },
+    controlsContainer: {
+        alignItems: "center",
+        width: "100%",
+        height: 120,
+        justifyContent: "center",
+      },
+      buttonWrapper: {
+        width: 100,
+        height: 100,
+        justifyContent: "center",
+        alignItems: "center",
+      },
+      roundButton: {
+        width: 100,
+        height: 100,
+        borderRadius: 50,
+        backgroundColor: "#4A90E2",
+        justifyContent: "center",
+        alignItems: "center",
+      },
+      buttonText: {
+        fontSize: 18,
+        color: "#fff",
+        textAlign: "center",
+      },
+   
+    optionsType: {
+        fontSize: 15,
+        color: '#4A90E2',
+        marginTop: 40,
+    },
+    optionsButton: {
+        position: 'absolute',
+        bottom: 80,
+        alignSelf: 'center',
+    },
+    stopButton: {
+        marginBottom: 10,
+        padding: 10,
+        borderRadius: 5,
+        },
+        stopText: {
+        fontSize: 16,
+        color: '#EC5800',
+        },
+        animatedBorder: {
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            borderRadius: 150,
+            borderWidth: 3,
+            borderColor: 'transparent',
+        },
+});

@@ -1,0 +1,11 @@
+export const defaultWorkValue = 25;
+export const defaultBreakValue = 5;
+export const defaultLongBreakEnabled = false;
+export const defaultLongBreakValue = 15;
+export const defaultFrequency = 4;
+export const defaultEnableVibration = false;
+export const defaultEnableSound = true;
+export const defaultTodayStat = 0;
+export const defaultAllTimeStat = 0;
+export const defaultScreenLock = true;
+export const defaultInitial = true;
